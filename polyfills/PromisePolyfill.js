@@ -13,9 +13,11 @@ class myPromise {
       reject(err);
     }
   }
+
   thenable = (subject) => {
     return subject && typeof subject.then === "function";
   };
+
   resolve = (value) => {
     if (this.settled) return;
     Object.defineProperty(this, "setlled", { value: true });
@@ -38,12 +40,14 @@ class myPromise {
       Object.defineProperty(this, "state", { value: state });
     }
   };
+
   reject = (reason) => {
     if (this.settled) return;
     Object.defineProperty(this, "setlled", { value: true });
     Object.defineProperty(this, "state", { value: "REJECTED" });
     Object.defineProperty(this, "value", { value: reason });
   };
+
   then(onFulFilled, onRejected) {
     return new this.constructor((resolve, reject) => {
       const internalOnFulfill = (value) => {
