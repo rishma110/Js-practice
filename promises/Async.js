@@ -8,7 +8,7 @@ let task = function (time) {
 
 const taskList = [42, task(1000), task(500), task(3000)];
 
-//promise.all fifo
+//promise.all fifo starting all async in parallel
 function myPromise(taskList) {
   let counter = 0;
   let results = [];
@@ -29,6 +29,34 @@ function myPromise(taskList) {
     });
   });
 }
+
+//fifo starting all async in sequence
+function myPromiseSeries(taskList) {
+  return new Promise((resolve, reject) => {
+    let result = [];
+
+    function recur(i) {
+      if (i === taskList.length) {
+        resolve(result);
+      } else {
+        let task =
+          taskList[i] instanceof Promise
+            ? taskList[i]
+            : Promise.resolve(taskList[i]);
+        task.then((data) => {
+          result.push(data);
+          return recur(i + 1);
+        });
+      }
+    }
+
+    return recur(0);
+  });
+}
+
+myPromiseSeries(mytaskList).then((res) => {
+  console.log("result is ", res);
+});
 
 myPromise(taskList).then((data) => console.log(data));
 //[42, 500, 1000, 3000]
