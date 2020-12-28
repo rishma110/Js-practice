@@ -30,7 +30,11 @@ function myPromise(taskList) {
   });
 }
 
-//fifo starting all async in sequence
+myPromise(taskList).then((data) => console.log(data));
+//[42, 500, 1000, 3000]
+
+
+// starting all async in sequence
 function myPromiseSeries(taskList) {
   return new Promise((resolve, reject) => {
     let result = [];
@@ -49,7 +53,6 @@ function myPromiseSeries(taskList) {
         });
       }
     }
-
     return recur(0);
   });
 }
@@ -58,8 +61,6 @@ myPromiseSeries(mytaskList).then((res) => {
   console.log("result is ", res);
 });
 
-myPromise(taskList).then((data) => console.log(data));
-//[42, 500, 1000, 3000]
 
 //promise.all
 function myOtherPromise(taskList) {
