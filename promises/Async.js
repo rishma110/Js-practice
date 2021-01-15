@@ -33,7 +33,6 @@ function myPromise(taskList) {
 myPromise(taskList).then((data) => console.log(data));
 //[42, 500, 1000, 3000]
 
-
 // starting all async in sequence
 function myPromiseSeries(taskList) {
   return new Promise((resolve, reject) => {
@@ -61,7 +60,6 @@ myPromiseSeries(mytaskList).then((res) => {
   console.log("result is ", res);
 });
 
-
 //promise.all
 function myOtherPromise(taskList) {
   return new Promise((resolve, reject) => {
@@ -83,3 +81,24 @@ function myOtherPromise(taskList) {
     });
   });
 }
+
+//Promises execution in series
+let task = function (time) {
+  return function () {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(time);
+      }, time);
+    });
+  };
+};
+
+const taskList = [task(1000), task(500), task(3000)];
+
+taskList.reduce((accP, currP) => {
+  return accP.then(() => {
+    return currP().then((result) => {
+      console.log(result);
+    });
+  });
+}, Promise.resolve());
