@@ -1,5 +1,5 @@
 //this.subscribers= {event1: [], event2:[]};
-class createMiddlewares {
+class CreateMiddlewares {
   constructor() {
     this.subscribers = [];
   }
@@ -14,22 +14,20 @@ class createMiddlewares {
   publish(eventName, data) {
     if (eventName in this.subscribers) {
       let callBackFunctions = this.subscribers[eventName];
-      let i = 0;
-      let self = this;
 
-      function recur(i) {
+      const recur = (i) => {
         if (i === callBackFunctions.length) {
           return;
         }
-        return callBackFunctions[i].call(self, data, recur.bind(self, i + 1));
-      }
+        return callBackFunctions[i].call(this, data, recur.bind(this, i + 1));
+      };
 
-      recur(i);
+      recur(0);
     }
   }
 }
 
-let middlewares = new createMiddlewares();
+let middlewares = new CreateMiddlewares();
 
 middlewares.attach("event1", (data, next) => {
   setTimeout(() => {

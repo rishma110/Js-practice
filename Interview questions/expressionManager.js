@@ -20,14 +20,14 @@ class EquationManager {
     }
     EquationManager.instance = this;
     EquationManager.exists = true;
+    if (!this.equations) {
+      this.equations = {};
+    }
     return this;
   }
 
   createEquation = (...args) => {
     let eqid = Date.now() + Math.random() * 100;
-    if (!this.equations) {
-      this.equations = {};
-    }
     this.equations[eqid] = {
       val: args.join(""),
       left: null,
@@ -83,13 +83,10 @@ class EquationManager {
 
   solveEquation = (eqId, obj) => {
     let equation = this.getExpr(eqId);
-
-    let keys = Object.keys(obj);
-    keys.forEach((key) => {
+    for (let key in obj) {
       let regex = new RegExp(key, "g");
       equation = equation.replace(regex, obj[key]);
-    });
-
+    }
     return eval(equation);
   };
 }

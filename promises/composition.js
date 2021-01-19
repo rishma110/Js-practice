@@ -26,11 +26,13 @@ squareAndAddTen(10).then((response) => {
 
 let composeFetch = (...args) => (payload) => {
   let i = args.length - 1;
-  recur = (url, payload) => {
+  recur = (i, payload) => {
+    if (i === 0) {
+      return Promise.resolve();
+    }
     return makeRequest(args[i], payload).then((newpayload) => {
-      i--;
-      return recur(args[i], newpayload);
+      return recur(i - 1, newpayload);
     });
   };
-  return recur(args[i], payload);
+  return recur(i, payload);
 };
