@@ -26,8 +26,6 @@ let central = require("./central"),
   mark = require("./mark");
 
 module.exports = function (id) {
-  // TODO
-  // Reminder: The deadline is tomorrow !
   let result = {
     id: id,
     username: "",

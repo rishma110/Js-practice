@@ -45,6 +45,8 @@ function mul(a) {
     }
   };
 }
+//simply
+let mul = (a) => (b) => (b ? mul(a * b) : a);
 console.log(mul(1)(2)(3)(4)());
 
 //IIFE
