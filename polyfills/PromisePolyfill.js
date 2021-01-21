@@ -4,14 +4,26 @@ class myPromise {
       throw new TypeError("Promise will take a function in the constructor");
     }
     this.observers = [];
-    Object.defineProperty(this, "setlled", { value: false });
-    Object.defineProperty(this, "state", { value: "PENDING" });
-    Object.defineProperty(this, "value", { value: null });
+    // Object.defineProperty(this, "setlled", { value: false });
+    // Object.defineProperty(this, "state", { value: "PENDING" });
+    // Object.defineProperty(this, "value", { value: null });
     try {
       executor(resolve, reject);
     } catch (err) {
       reject(err);
     }
+  }
+
+  get value() {
+    return null;
+  }
+
+  get settled() {
+    return false;
+  }
+
+  get state() {
+    return "PENDING";
   }
 
   thenable = (subject) => {
@@ -32,6 +44,8 @@ class myPromise {
           onInternalReject(r);
         }
       );
+      Object.defineProperty(this, "value", { value: value });
+      Object.defineProperty(this, "state", { value: "FULFILLED" });
       // value.then((v)=>resolve(v), (r)=>reject(r))
     } else {
       value = isThenable ? value.value : value;
@@ -88,6 +102,19 @@ class myPromise {
           }
         })
         .catch((err) => reject(err));
+    });
+  }
+
+  static race(iterables) {
+    return new Promise((resolve, reject) => {
+      iterables.forEach((item) => {
+        let p = item instanceof Promsie ? item : Promise.resolve(item);
+        p.then((val) => {
+          resolve(val);
+        }).catch((err) => {
+          reject(err);
+        });
+      });
     });
   }
 }
