@@ -65,7 +65,7 @@ class Board {
   }
   create() {
     //make an api call to get laddermap and snake map
-    fetch("getSnakeLadderMap").then((data) => {
+    fetch("http://getSnakeLadderMap").then((data) => {
       this.snakeMap = data.snakeMap;
       this.ladderMap = data.ladderMap;
     });
@@ -94,5 +94,3 @@ class Players {
     this.currPos = pos;
   }
 }
-
-//on click
