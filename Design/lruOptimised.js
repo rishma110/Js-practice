@@ -4,7 +4,7 @@ class Node {
     this.key = key;
     this.value = value;
     this.next = next;
-    thie.prev = prev;
+    this.prev = prev;
   }
 }
 class LRU {

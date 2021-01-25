@@ -33,9 +33,8 @@ class RandomizedSet {
       let index = this.map[key].index;
       let temp = this.arr[index];
       let last = arr.length - 1;
-      let lastIndex = this.map[this.arr[last]].index;
       let lastValue = this.map[this.arr[last]].value;
-      this.map[this.arr[last]] = { index: lastIndex, value: lastValue };
+      this.map[this.arr[last]] = { index: index, value: lastValue };
       this.arr[index] = this.arr[last];
       this.arr[last] = temp;
 
