@@ -86,7 +86,6 @@ class MyPromise {
     return new MyPromise((resolve, reject) => {
       iterable.forEach((val, index) => {
         let p = val instanceof MyPromise ? val : MyPromise.resolve(val);
-
         p.then((result) => {
           res[index] = result;
           counter++;

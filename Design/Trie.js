@@ -1,7 +1,7 @@
 class Node {
   constructor(word) {
     this.key = word;
-    this.children = null;
+    this.children = {};
     this.isFullWord = false;
   }
 }
@@ -16,27 +16,28 @@ class Trie {
     return this;
   }
 
-  insert = (word) => {
+  insert(word) {
     let currNode = this.root;
     let letter = word.slice(0, 1);
     word = word.slice(1);
     let child;
 
     while (letter.length > 0) {
-      if (currNode.children[letter] === null) {
+      if (currNode.children && currNode.children[letter]) {
+        child = currNode.children[letter];
+      } else {
         child = new Node(letter);
         currNode.children[letter] = child;
-      } else {
-        child = currNode.children[letter];
       }
       currNode = child;
       letter = word.slice(0, 1);
       word = word.slice(1);
     }
-    child.isFullWord = true;
-  };
 
-  search = (word) => {
+    child.isFullWord = true;
+  }
+
+  search(word) {
     let currNode = this.root;
     let letter = word.slice(0, 1);
     word = word.slice(1);
@@ -54,16 +55,16 @@ class Trie {
       }
     }
     return true;
-  };
+  }
 
-  startsWith = (word) => {
+  startsWith(word) {
     let currNode = this.root;
     let letter = word.slice(0, 1);
     word = word.slice(1);
 
     while (letter.length > 0) {
       if (letter in currNode.children) {
-        currNode = currNode.children[letter];
+        currNode = currNode ? currNode.children[letter] : null;
         letter = word.slice(0, 1);
         word = word.slice(1);
       } else {
@@ -71,5 +72,10 @@ class Trie {
       }
     }
     return true;
-  };
+  }
 }
+
+let trie = new Trie();
+trie.insert("apple");
+trie.insert("app");
+console.log(trie.search("app"));
