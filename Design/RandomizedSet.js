@@ -48,6 +48,7 @@ class RandomizedSet {
 
   getRandom = () => {
     const randomIndex = Math.floor(Math.random() * this.arr.length);
-    return this.arr[randomIndex];
+    let key = this.arr[randomIndex];
+    return this.map[key].value;
   };
 }
