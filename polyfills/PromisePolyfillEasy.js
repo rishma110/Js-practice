@@ -55,7 +55,7 @@ class MyPromise {
   then(onFullFilled) {
     if (this.state === "FULLFILLED" && !this.called) {
       onFullFilled(this.value);
-      this.called = false;
+      this.called = true;
     }
     return this;
   }
@@ -64,7 +64,7 @@ class MyPromise {
     if (this.state !== "REJECTED") return;
     if (!this.called) {
       onReject(this.value);
-      this.called = false;
+      this.called = true;
     }
   }
 
@@ -107,6 +107,25 @@ class MyPromise {
           resolve(result);
         }).catch((err) => {
           reject(err);
+        });
+      });
+    });
+  }
+
+  static any(iterable) {
+    let count = 0;
+    let res = [];
+    return new MyPromise((resolve, reject) => {
+      iterable.forEach((val, index) => {
+        let p = val instanceof MyPromise ? val : MyPromise.resolve(val);
+        p.then((value) => {
+          resolve(value);
+        }).catch((err) => {
+          count++;
+          res[index] = err;
+          if (count === iterables.length) {
+            reject(err);
+          }
         });
       });
     });

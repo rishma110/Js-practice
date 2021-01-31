@@ -136,6 +136,25 @@ class Piece {
     this.isWhitePiece = isW;
   }
 
+  validMove() {
+    this.validMovesWhite = {
+      Rook: [],
+      Knight: [],
+      Bishop: [],
+      Queen: [],
+      King: [],
+      Pawn: [],
+    };
+    this.validMovesBlack = {
+      Rook: [],
+      Knight: [],
+      Bishop: [],
+      Queen: [],
+      King: [],
+      Pawn: [],
+    };
+  }
+
   canMove(start, end) {
     //check for boundary conditions
     switch (this.pieceType) {
@@ -162,3 +181,6 @@ class Piece {
     }
   }
 }
+
+//https://www.geeksforgeeks.org/design-a-chess-game/
+//https://codereview.stackexchange.com/questions/53875/generating-possible-chess-moves -- possible moves

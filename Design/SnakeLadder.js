@@ -14,7 +14,7 @@ class Game {
   declare() {
     let str = "";
     for (let i = 0; i < this.result.length; i++) {
-      str += `${this.result[i].name} won ${i} place`;
+      str += `${this.result[i].name} won ${i + 1} place`;
     }
 
     return str;
@@ -60,8 +60,8 @@ class Dice {
 
 class Board {
   constructor() {
-    this.ladderMap = [];
-    this.snakeMap = [];
+    this.ladderMap = {};
+    this.snakeMap = {};
   }
   create() {
     //make an api call to get laddermap and snake map
