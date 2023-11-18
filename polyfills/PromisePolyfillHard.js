@@ -1,3 +1,4 @@
+// reference: https://www.linkedin.com/pulse/custom-promise-implementationpromise-polyfill-sai-teja/
 class MyPromiseHard {
   constructor(executorFn) {
     if (typeof executorFn !== "function") {
