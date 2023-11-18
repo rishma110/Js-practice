@@ -11,13 +11,13 @@ Function.prototype.myBind = function (...args) {
 const throttle = (funct, limit) => {
   let flag = true;
   return function () {
-    if (flag) {
-      funct();
+    if(flag) {
       flag = false;
+      funct();
+      setTimeout(() => {
+        flag = true;
+      }, limit);
     }
-    setTimeout(() => {
-      flag = true;
-    }, limit);
   };
 };
 
@@ -27,7 +27,7 @@ const debounce = (funct, limit) => {
     const context = this;
     const args = arguments;
     clearTimeout(timer);
-    setTimeout(() => {
+    timer = setTimeout(() => {
       funct.apply(context, args);
     }, limit);
   };
