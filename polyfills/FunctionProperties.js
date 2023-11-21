@@ -7,6 +7,14 @@ Function.prototype.myBind = function (...args) {
   };
 };
 
+Function.prototype.myCall = function(context = {}, ...args) {
+  if(typeof this !== "function") {
+    throw new Error("Please add myCall to a function");
+  }
+  context.fn = this;
+  context.fn(...args);
+}
+
 //Throttle and debounce
 const throttle = (funct, limit) => {
   let flag = true;
